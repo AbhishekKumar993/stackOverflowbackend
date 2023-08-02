@@ -84,14 +84,18 @@ import mongoose from 'mongoose'
 import User from '../models/auth.js'
 
 export const AskQuestion = async (req, res) => {
+  console.log("Ask Question");
   const postQuestionData = req.body
+  console.log(postQuestionData)
   const { noOfQuestions, planOpted } = await User.findById(postQuestionData.userId)
 
   try {
     let questionLimit = 0;
-    if (planOpted === 'Free Plan') {
+    if (planOpted === 'Free') {
+      // console.log("here 1");
       questionLimit = 10000;
-    } else if (planOpted === 'Silver Plan') {
+    } else if (planOpted === 'Silver') {
+      // console.log("here 2");
       questionLimit = 5000;
     }
 
@@ -100,9 +104,12 @@ export const AskQuestion = async (req, res) => {
       await User.findByIdAndUpdate(postQuestionData.userId, { $inc: { noOfQuestions: -1 } })
       res.status(200).send("Posted a question successfully")
     } else {
+      console.log("questionLimit", questionLimit);
+      // console.log("here 3");
       res.status(409).send("Per day question limit reached")
     }
   } catch (error) {
+    // console.log("error");
     console.log('question.js controllers', error);
     res.status(409).send("Couldn't post a question")
   }

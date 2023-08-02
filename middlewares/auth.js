@@ -8,7 +8,9 @@ const auth = (req, res, next) => {
         req.userId = decodeData?.id
         next()
     } catch (error) {
-        
+        // console.error(error);
+        // res.status("500 Internal");
+        next();
     }
 }
 
