@@ -90,9 +90,9 @@ export const AskQuestion = async (req, res) => {
   try {
     let questionLimit = 0;
     if (planOpted === 'Free Plan') {
-      questionLimit = 1;
+      questionLimit = 10000;
     } else if (planOpted === 'Silver Plan') {
-      questionLimit = 5;
+      questionLimit = 5000;
     }
 
     if (noOfQuestions < questionLimit) {
